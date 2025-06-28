@@ -1,0 +1,37 @@
+# Directorio de compilación de Maven
+/target/
+
+# Archivos de configuración de IntelliJ IDEA
+/.idea/
+/*.iml
+
+# Archivos de configuración de Eclipse
+/.classpath
+/.project
+/.settings/
+
+# Archivos de logs
+*.log
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos generados por el sistema operativo
+*.swp
+
+# Archivos de paquetes
+*.jar
+*.war
+
+# Directorio de cache de Spring Boot DevTools
+/.restart/
+
+# Variables de entorno locales
+.env
+
+# Directorio de node_modules si usas Node.js en tu proyecto
+/node_modules/
+
+# Archivos de prueba
+/test-output/
