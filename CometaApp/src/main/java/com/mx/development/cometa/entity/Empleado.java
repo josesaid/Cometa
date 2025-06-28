@@ -1,4 +1,4 @@
-package com.mx.development.cometa;
+package com.mx.development.cometa.entity;
 
 import lombok.Data;
 
@@ -10,4 +10,5 @@ public class Empleado {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
+
 }
