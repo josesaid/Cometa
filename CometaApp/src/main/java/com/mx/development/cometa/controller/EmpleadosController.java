@@ -15,82 +15,83 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static com.mx.development.cometa.tools.MensajeTools.mensajeExito;
+import static com.mx.development.cometa.tools.MensajeTools.mensajeFallido;
+
 /**
  * @author josesaidolanogarcia
  */
 @RestController
-@RequestMapping("/api/v1/empleados")
+@RequestMapping("/api/v1")
 @Slf4j
 public class EmpleadosController {
 
     @Autowired
     private EmpleadoService empleadoService;
 
-    /*public EmpleadosController(EmpleadoService empleadoService){
-        this.empleadoService = empleadoService;
-    }*/
-
-    @GetMapping("/getEmpleados1")
-    public String getEmpleados1() {
-        return "Hola Mundo1";
-    }
-
-    @GetMapping("/getEmpleados2")
-    public String getEmpleados2() {
-        return "Hola Mundo2";
-    }
-
-    @PostMapping()
+    @PostMapping("/empleados")
     public ResponseEntity<Mensaje> createEmpleado(@RequestBody Empleado empleado) {
+
         log.info("Recibiendo: {}", empleado);
-
-        MensajeExitoso mensajeExitoso = new MensajeExitoso();
-
         log.info("Clonando: {}", empleado);
+
         Optional<Empleado> empleadoTemp = Util.cloneEmpleado(empleado);
-        if (!empleadoTemp.isEmpty()) {
-            log.info("Empleado clonado: {}", empleadoTemp);
-        }else{
+
+        if(empleadoTemp.isEmpty()){
             log.info("No se pudo validar/clonar el empleado");
+            return mensajeFallido("Error no se pudo clonar el empleado",
+                    "1234567890",
+                    "ERROR_INTERNO",
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        log.info("Empleado clonado: {}", empleadoTemp.get());
+
+        if (empleadoTemp.get().getNombre()==null || empleadoTemp.get().getNombre().length()<5) {
+            log.error("DEBIO HABER FALLADO!");
+            return mensajeFallido("El nombre del empleado debe tener al menos 5 caracteres",
+                    "12345678908",
+                    "ERROR_VALIDACION",
+                    HttpStatus.BAD_REQUEST);
         }
 
-        //si OK:
         Empleado empleadoResultante = empleadoService.createEmployee(empleadoTemp.get());
         log.info("Retornando: {}", empleadoResultante);
-
-        if(empleadoResultante.getNombre().length()<5){
-            log.error("DEBIO HABER FALLADO!");
-            MensajeFallido mensaje = new MensajeFallido();
-            mensaje.setMensaje("El nombre del empleado debe tener al menos 5 caracteres");
-            mensaje.setId("1234567890");
-            mensaje.setError("El nombre del empleado debe tener al menos 5 caracteres");
-            mensaje.setTipoError("ERROR_VALIDACION");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensaje);
-        }
-        mensajeExitoso.setMensaje("Todo esta perfecto y el empleado fue creado exitosamente.");
-        mensajeExitoso.setId("1");
-        mensajeExitoso.setFecha(LocalDate.now());
-        mensajeExitoso.setEmpleado(empleadoResultante);
-        return ResponseEntity.status(HttpStatus.CREATED).body(mensajeExitoso);
+        return mensajeExito("Todo esta perfecto y el empleado fue creado exitosamente.",
+                "1",
+                empleadoResultante);
     }
 
-    @GetMapping("/{empleadoId}")
-    public Empleado findEmpleadobyId(@PathVariable("empleadoId") String id){
-        Empleado empleado = new Empleado();
-        if (id.equals("1")) {
-            empleado.setNombre("Jose");
-            empleado.setApellidoPaterno("Olano");
-            empleado.setApellidoMaterno("Garcia");
-        }else{
-            empleado.setNombre("Pepe");
-            empleado.setApellidoPaterno("Perez");
-            empleado.setApellidoMaterno("Garcia");
+
+
+
+    @GetMapping("/empleados/{id}")
+    public ResponseEntity<Empleado> findEmpleadobyId(@PathVariable String id) {
+        log.info("Buscando empleado con id: {}", id);
+        Optional<Empleado> posibleEmpleado = empleadoService.findByEmpleadoId(id);
+        if (posibleEmpleado.isPresent()) {
+            log.info("Empleado encontrado: {}", posibleEmpleado.get());
+            return ResponseEntity.ok(posibleEmpleado.get());
         }
-        return empleado;
+        log.warn("No se encontró empleado con id: {}", id);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+
+    @GetMapping("/empleados")
+    public ResponseEntity<Iterable<Empleado>> getAllEmpleados() {
+        Iterable iterableEmpleados = empleadoService.getAllEmpleados();
+        return ResponseEntity.status(HttpStatus.OK).body(iterableEmpleados);
+    }
+
+
+    //@PutMapping("/empleados/{id}")
+    //public ResponseEntity<Object> createEmpleado(@PathVariable("id") String id, @RequestBody Empleado empleado) {
+    //    return null;
+    //}
+
+
+    /*
     @GetMapping()
-    //@GetMapping("/javier")
     public Empleado usaRequestParam(@RequestParam("departamento") String departamento, @RequestParam(value = "area", required = false) String area){
         System.out.println("Departamento: " + departamento);
         System.out.println("area: " + area);
@@ -107,5 +108,5 @@ public class EmpleadosController {
     public String usaRequestParamConValorDefault(@RequestParam(defaultValue = "123") String id){
         return "id: "+ id;
     }
-
+     */
 }
