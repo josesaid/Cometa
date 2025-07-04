@@ -1,29 +1,32 @@
 package com.mx.development.cometa.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author josesaidolanogarcia
  */
 @Data
-@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "empleado")
 public class Empleado {
-    private String nombre;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column
+    private String nombre;
 
-    public Long getId() {
-        return id;
-    }
+    @Column
+    private String apellidoPaterno;
+
+    @Column
+    private String apellidoMaterno;
+
+
+
 }

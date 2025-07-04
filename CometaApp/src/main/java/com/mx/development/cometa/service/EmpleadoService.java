@@ -36,4 +36,10 @@ public class EmpleadoService {
     public Iterable<Empleado> getAllEmpleados() {
         return empleadoRepository.findAll();
     }
+
+    public Empleado deleteEmpleado(Empleado empleado) {
+        empleadoRepository.delete(empleado);
+        return empleado;
+    }
+
 }

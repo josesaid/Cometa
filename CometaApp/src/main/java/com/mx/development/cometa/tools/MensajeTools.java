@@ -32,4 +32,13 @@ public class MensajeTools {
         mensajeExitoso.setEmpleado(empleado);
         return ResponseEntity.status(HttpStatus.CREATED).body(mensajeExitoso);
     }
+
+    static public ResponseEntity<Mensaje> mensajeEjecutadoConExito(String mensaje, String id, Empleado empleado){
+        MensajeExitoso mensajeExitoso = new MensajeExitoso();
+        mensajeExitoso.setMensaje(mensaje);
+        mensajeExitoso.setId(id);
+        mensajeExitoso.setFecha(LocalDate.now());
+        mensajeExitoso.setEmpleado(empleado);
+        return ResponseEntity.status(HttpStatus.OK).body(mensajeExitoso);
+    }
 }

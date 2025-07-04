@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static com.mx.development.cometa.tools.MensajeTools.mensajeExito;
-import static com.mx.development.cometa.tools.MensajeTools.mensajeFallido;
+import static com.mx.development.cometa.tools.MensajeTools.*;
 
 /**
  * @author josesaidolanogarcia
@@ -80,33 +79,27 @@ public class EmpleadosController {
     @GetMapping("/empleados")
     public ResponseEntity<Iterable<Empleado>> getAllEmpleados() {
         Iterable iterableEmpleados = empleadoService.getAllEmpleados();
-        return ResponseEntity.status(HttpStatus.OK).body(iterableEmpleados);
+        if (!iterableEmpleados.iterator().hasNext()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(iterableEmpleados);
+        }
     }
 
 
-    //@PutMapping("/empleados/{id}")
-    //public ResponseEntity<Object> createEmpleado(@PathVariable("id") String id, @RequestBody Empleado empleado) {
-    //    return null;
-    //}
-
-
-    /*
-    @GetMapping()
-    public Empleado usaRequestParam(@RequestParam("departamento") String departamento, @RequestParam(value = "area", required = false) String area){
-        System.out.println("Departamento: " + departamento);
-        System.out.println("area: " + area);
-
-        return new Empleado();
+    @DeleteMapping("/empleados/{deleteId}")
+    public ResponseEntity<Mensaje> deleteEmpleadobyId(@PathVariable ("deleteId") String empleadoId) {
+        log.info("Buscando empleado: {}", empleadoId);
+        Optional<Empleado> posibleEmpleado = empleadoService.findByEmpleadoId(empleadoId);
+        if (posibleEmpleado.isPresent()) {
+            Empleado empleado = posibleEmpleado.get();
+            log.info("Empleado: {} ", empleado);
+            empleadoService.deleteEmpleado(empleado);
+            log.info("Empleado borrado con éxito: {}", empleado);
+            return mensajeEjecutadoConExito("Empleado borrado con éxito.", empleadoId,  empleado);
+        }
+        log.warn("No se encontró empleado id: {}", empleadoId);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @GetMapping("/usaRequestParamConOptional")
-    public String usaRequestParamConOptional(@RequestParam Optional<String> id){
-        return "ID: " + id.orElse("No se recibió ID");
-    }
-
-    @GetMapping("/usaRequestParamConValorDefault")
-    public String usaRequestParamConValorDefault(@RequestParam(defaultValue = "123") String id){
-        return "id: "+ id;
-    }
-     */
 }
