@@ -22,6 +22,7 @@ public class InitData {
     public void init() {
         empleadoRepository.save(new Empleado(null, "Juan", "Pérez", "García"));
         empleadoRepository.save(new Empleado(null, "Ana", "López", "Martínez"));
+        empleadoRepository.save(new Empleado(null, "Pedro", "Picapiedra", "Xavier"));
         log.info("Se han creado los datos de prueba");
     }
 
