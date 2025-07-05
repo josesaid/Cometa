@@ -45,13 +45,13 @@ public class EmpleadosController {
         }
         log.info("Empleado clonado: {}", empleadoTemp.get());
 
-        if (empleadoTemp.get().getNombre()==null || empleadoTemp.get().getNombre().length()<5) {
+        /*if (empleadoTemp.get().getNombre()==null || empleadoTemp.get().getNombre().length()<5) {
             log.error("DEBIO HABER FALLADO!");
             return mensajeFallido("El nombre del empleado debe tener al menos 5 caracteres",
                     "12345678908",
                     "ERROR_VALIDACION",
                     HttpStatus.BAD_REQUEST);
-        }
+        }*/
 
         Empleado empleadoResultante = empleadoService.createEmployee(empleadoTemp.get());
         log.info("Retornando: {}", empleadoResultante);
