@@ -32,7 +32,6 @@ public class HolaMundoController {
 
     @GetMapping("/ejemplo03")
     @ResponseBody
-    //http://localhost:8080/hola/ejemplo02?id=1,2,3
     //http://localhost:8080/hola/ejemplo03?id=1&id=2&id=3
     public String usaRequestConLista(@RequestParam List<String> id) {
         return "IDs are " + id;
