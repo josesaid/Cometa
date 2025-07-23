@@ -1,5 +1,6 @@
 package com.mx.development.cometa;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -14,5 +15,6 @@ public class CometaAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CometaAppApplication.class, args);
 	}
+
 
 }

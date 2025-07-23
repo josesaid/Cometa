@@ -4,6 +4,7 @@ import com.mx.development.cometa.entity.Empleado;
 import com.mx.development.cometa.repository.EmpleadoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
@@ -13,7 +14,7 @@ import jakarta.annotation.PostConstruct;
  */
 @Component
 @Slf4j
-public class InitData {
+public class InitData{
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
