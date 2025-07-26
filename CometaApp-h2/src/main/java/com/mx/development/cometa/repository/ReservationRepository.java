@@ -4,11 +4,12 @@ import com.mx.development.cometa.entity.Reservation;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * @author josesaidolanogarcia
  */
 @Repository
 public interface ReservationRepository extends CrudRepository<Reservation, Integer> {
-    Reservation findByReservationId(Integer reservationId);
-    findByReservatio...
+    Reservation findById(int id);
 }

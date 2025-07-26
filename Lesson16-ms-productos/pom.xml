@@ -5,32 +5,31 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.3</version>
+		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<!--<packaging>war</packaging>-->
-	<groupId>com.mx.development.cometa</groupId>
-	<artifactId>CometaApp-h2</artifactId>
+	<groupId>com.example</groupId>
+	<artifactId>Lesson16-ms-productos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CometaApp-h2</name>
-	<description>Este es un primer microservicio para el grupo cometa</description>
+	<name>Lesson16-ms-productos</name>
+	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
 	</licenses>
 	<developers>
-		<developer>
-			<name>Said Olano</name>
-			<email>said_unknown@codegym.com</email>
-		</developer>
+		<developer/>
 	</developers>
-
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<!--<spring-boot-admin.version>3.5.0</spring-boot-admin.version>-->
-		<spring-boot-admin.version>3.3.3</spring-boot-admin.version>
+		<spring-boot-admin.version>3.5.0</spring-boot-admin.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
